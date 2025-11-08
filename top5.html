@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Josefin+Sans:ital,wght@0,100..700;1,100..700&family=Lexend:wght@100..900&display=swap" rel="stylesheet">
+
+  <!-- Tailwind -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <title>Top 5 • Ba Yi’s PC Games</title>
+  <style>
+    /* Smoothen image scaling and prevent blurry look on hover transforms */
+    .gpu { image-rendering: auto; backface-visibility: hidden; transform: translateZ(0); }
+    /* Hide page scroll when modal is open */
+    body.modal-open { overflow: hidden; }
+  </style>
+</head>
+<body class="bg-[#0f0b2b] text-white font-[Lexend]">
+  <!-- Header -->
+  <header class="fixed top-0 left-0 w-full bg-[#0f0b2b]/70 backdrop-blur-md z-50 flex justify-between items-center px-6 md:px-10 py-4">
+    <div class="flex items-center gap-3">
+      <img src="Ba_Yi’s Pc Games.png" alt="Logo"
+           class="h-10 w-10 object-contain border border-pink-400 rounded-full">
+      <span class="text-lg md:text-xl font-bold">Ba Yi’s PC Games</span>
+    </div>
+    <nav class="hidden md:flex gap-6 text-sm md:text-base">
+      <a href="top5.html" class="relative group">Top 5<span class="absolute left-0 -bottom-1 w-0 h-[2px] bg-pink-400 transition-all group-hover:w-full"></span></a>
+      <a href="#" class="relative group">Top 10<span class="absolute left-0 -bottom-1 w-0 h-[2px] bg-pink-400 transition-all group-hover:w-full"></span></a>
+      <a href="#" class="relative group">Recommended<span class="absolute left-0 -bottom-1 w-0 h-[2px] bg-pink-400 transition-all group-hover:w-full"></span></a>
+      <a href="index.html" class="relative group">Home<span class="absolute left-0 -bottom-1 w-0 h-[2px] bg-pink-400 transition-all group-hover:w-full"></span></a>
+    </nav>
+  </header>
+
+  <!-- Spacer -->
+  <div class="h-[72px]"></div>
+
+  <!-- Hero -->
+  <section class="px-6 md:px-10 py-10 md:py-16">
+    <h1 class="text-3xl md:text-5xl font-bold leading-tight">
+      🎮 Top <span class="text-pink-400">5 PC Games</span> — Handpicked
+    </h1>
+    <p class="text-gray-300 mt-3 md:mt-4 max-w-2xl">
+      Click any game to see gameplay, real PC specs, and buy options via WhatsApp.
+    </p>
+  </section>
+
+  <!-- #1 Featured -->
+  <section class="px-6 md:px-10 pb-10">
+    <button data-game="gta5"
+      class="w-full text-left relative bg-[#221a54] rounded-2xl overflow-hidden h-[420px] md:h-[520px] group">
+      <div class="absolute inset-0 bg-cover bg-center gpu" style="background-image:url('c_1.0.jpg')"></div>
+      <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent"></div>
+      <div class="absolute top-5 left-5 bg-pink-500 text-white font-bold text-xl md:text-2xl px-4 py-2 rounded-full">
+        🥇 #1
+      </div>
+      <div class="absolute bottom-0 w-full p-6 md:p-8">
+        <h2 class="text-2xl md:text-3xl font-bold">GTA V</h2>
+        <p class="text-gray-300">Open World Action</p>
+      </div>
+    </button>
+  </section>
+
+  <!-- #2–#5 -->
+  <section class="px-6 md:px-10 pb-16 space-y-6">
+    <button data-game="fifa23" class="relative bg-[#221a54] rounded-xl overflow-hidden h-[200px] md:h-[240px] w-full text-left">
+      <div class="absolute inset-0 bg-cover bg-center gpu" style="background-image:url('c_2.0.png')"></div>
+      <div class="absolute inset-0 bg-gradient-to-r from-black/80 via-black/40 to-transparent"></div>
+      <div class="absolute left-0 top-0 h-full w-full flex items-center p-6 md:p-8">
+        <span class="text-pink-400 text-2xl md:text-3xl font-bold w-16">🥈 #2</span>
+        <div class="ml-4">
+          <h3 class="text-xl md:text-2xl font-bold">EA SPORTS™ FIFA 23</h3>
+          <p class="text-gray-300 text-sm md:text-base">Sports Simulation</p>
+        </div>
+      </div>
+    </button>
+
+    <button data-game="arkham" class="relative bg-[#221a54] rounded-xl overflow-hidden h-[200px] md:h-[240px] w-full text-left">
+      <div class="absolute inset-0 bg-cover bg-center gpu" style="background-image:url('c_3.0.jpg')"></div>
+      <div class="absolute inset-0 bg-gradient-to-r from-black/80 via-black/40 to-transparent"></div>
+      <div class="absolute left-0 top-0 h-full w-full flex items-center p-6 md:p-8">
+        <span class="text-pink-400 text-2xl md:text-3xl font-bold w-16">🥉 #3</span>
+        <div class="ml-4">
+          <h3 class="text-xl md:text-2xl font-bold">Batman: Arkham Knight</h3>
+          <p class="text-gray-300 text-sm md:text-base">Action / Adventure</p>
+        </div>
+      </div>
+    </button>
+
+    <button data-game="spidey" class="relative bg-[#221a54] rounded-xl overflow-hidden h-[200px] md:h-[240px] w-full text-left">
+      <div class="absolute inset-0 bg-cover bg-center gpu" style="background-image:url('c_4.jpg')"></div>
+      <div class="absolute inset-0 bg-gradient-to-r from-black/80 via-black/40 to-transparent"></div>
+      <div class="absolute left-0 top-0 h-full w-full flex items-center p-6 md:p-8">
+        <span class="text-pink-400 text-2xl md:text-3xl font-bold w-16">#4</span>
+        <div class="ml-4">
+          <h3 class="text-xl md:text-2xl font-bold">Marvel’s Spider-Man Remastered</h3>
+          <p class="text-gray-300 text-sm md:text-base">Action / Adventure</p>
+        </div>
+      </div>
+    </button>
+
+    <button data-game="cyberpunk" class="relative bg-[#221a54] rounded-xl overflow-hidden h-[200px] md:h-[240px] w-full text-left">
+      <div class="absolute inset-0 bg-cover bg-center gpu" style="background-image:url('c_5.png')"></div>
+      <div class="absolute inset-0 bg-gradient-to-r from-black/80 via-black/40 to-transparent"></div>
+      <div class="absolute left-0 top-0 h-full w-full flex items-center p-6 md:p-8">
+        <span class="text-pink-400 text-2xl md:text-3xl font-bold w-16">#5</span>
+        <div class="ml-4">
+          <h3 class="text-xl md:text-2xl font-bold">Cyberpunk 2077</h3>
+          <p class="text-gray-300 text-sm md:text-base">RPG / Sci-Fi</p>
+        </div>
+      </div>
+    </button>
+  </section>
+
+  <!-- Modal -->
+  <div id="gameModal" class="fixed inset-0 z-[70] hidden" aria-hidden="true">
+    <!-- Backdrop -->
+    <div id="modalBackdrop" class="absolute inset-0 bg-black/70"></div>
+    <!-- Panel -->
+    <div class="relative mx-auto max-w-4xl w-[92%] md:w-[85%] lg:w-[70%] bg-[#151039] rounded-2xl border border-pink-400/20 mt-[6vh] md:mt-[8vh]">
+      <!-- Header -->
+      <div class="flex items-start justify-between p-4 md:p-6 border-b border-white/10">
+        <div>
+          <h3 id="modalTitle" class="text-xl md:text-2xl font-bold">Game Title</h3>
+          <p id="modalGenre" class="text-pink-300 text-sm mt-1">Genre</p>
+        </div>
+        <button id="modalClose" class="text-white/70 hover:text-white text-2xl leading-none">&times;</button>
+      </div>
+
+      <!-- Scrollable Content -->
+      <div class="max-h-[75vh] overflow-y-auto p-4 md:p-6 space-y-6">
+        <!-- Video -->
+        <div class="aspect-video w-full rounded-xl overflow-hidden bg-black">
+          <iframe id="modalVideo" class="w-full h-full" src="" title="Gameplay"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  allowfullscreen loading="lazy"></iframe>
+        </div>
+
+        <!-- Description -->
+        <p id="modalDesc" class="text-gray-200 leading-relaxed"></p>
+
+        <!-- Specs -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div class="bg-white/5 rounded-xl p-4">
+            <h4 class="font-semibold text-white">Minimum Specs</h4>
+            <ul id="specsMin" class="list-disc list-inside text-gray-300 text-sm mt-2 space-y-1"></ul>
+          </div>
+          <div class="bg-white/5 rounded-xl p-4">
+            <h4 class="font-semibold text-white">Recommended Specs</h4>
+            <ul id="specsRec" class="list-disc list-inside text-gray-300 text-sm mt-2 space-y-1"></ul>
+          </div>
+        </div>
+
+        <!-- Buy -->
+        <div class="bg-gradient-to-r from-pink-500/20 to-pink-400/10 rounded-xl p-4 md:p-5 flex items-center justify-between gap-4 flex-wrap">
+          <div>
+            <p class="text-sm text-gray-300">Download (licensing service)</p>
+            <p class="text-2xl font-extrabold" id="priceEl">₦—</p>
+          </div>
+          <div class="flex gap-3">
+            <a id="buyNow" target="_blank"
+               class="px-5 py-3 rounded-xl bg-pink-500 hover:bg-pink-600 text-white font-semibold">BUY on WhatsApp</a>
+            <a id="addCart" target="_blank"
+               class="px-5 py-3 rounded-xl bg-white/10 hover:bg-white/20 text-white font-semibold">Add to Cart (WA)</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // --- Data (descriptions are concise; specs based on official pages) ---
+    const games = {
+      gta5: {
+        name: "GTA V",
+        genre: "Open World Action",
+        // Official PC trailer (Rockstar)
+        video: "https://www.youtube.com/embed/4E8bbo3bOtU?rel=0",
+        desc: "Switch between three protagonists and take over Los Santos in Rockstar’s open-world blockbuster with heists, vehicles, and GTA Online.",
+        // Using Rockstar Support (Enhanced/Legacy listed publicly)
+        min: [
+          "CPU: Intel Core i7-4770 or AMD Ryzen 5 1400",
+          "RAM: 12 GB",
+          "GPU: NVIDIA GTX 1050 Ti 4GB / AMD RX 570 4GB",
+          "Storage: 90 GB"
+        ],
+        rec: [
+          "CPU: Intel Core i7-6700K or AMD Ryzen 5 2600",
+          "RAM: 16 GB",
+          "GPU: NVIDIA GTX 1660 / AMD RX 590",
+          "Storage: 90 GB SSD"
+        ]
+      },
+      fifa23: {
+        name: "EA SPORTS™ FIFA 23",
+        genre: "Sports Simulation",
+        // Official gameplay deep dive (EA SPORTS)
+        video: "https://www.youtube.com/embed/o3V-GvvzjE4?rel=0",
+        desc: "HyperMotion2 on PC, cross-play modes, and the most authentic football experience of the FIFA era.",
+        min: [
+          "CPU: Intel Core i5-6600K or AMD Ryzen 5 1600",
+          "RAM: 8 GB",
+          "GPU: GTX 1050 Ti / RX 570",
+          "Storage: 100 GB"
+        ],
+        rec: [
+          "CPU: Intel Core i7-6700 or AMD Ryzen 7 2700X",
+          "RAM: 12 GB",
+          "GPU: GTX 1660 / RX 5600 XT",
+          "Storage: 100 GB"
+        ]
+      },
+      arkham: {
+        name: "Batman: Arkham Knight",
+        genre: "Action / Adventure",
+        // Official gameplay trailer (WB Games)
+        video: "https://www.youtube.com/embed/wsf78BS9VE0?rel=0",
+        desc: "Rocksteady’s finale: glide, fight, and drive the Batmobile across an open-world Gotham against the Arkham Knight and Scarecrow.",
+        min: [
+          "CPU: Intel i5-750 or AMD Phenom II X4 965",
+          "RAM: 6 GB",
+          "GPU: NVIDIA GTX 660 / AMD HD 7870",
+          "Storage: 45 GB"
+        ],
+        rec: [
+          "CPU: Intel i7-3770 or AMD FX-8350",
+          "RAM: 8 GB",
+          "GPU: NVIDIA GTX 760 / AMD R9 280",
+          "Storage: 55 GB"
+        ]
+      },
+      spidey: {
+        name: "Marvel’s Spider-Man Remastered",
+        genre: "Action / Adventure",
+        // Official PC features trailer (PlayStation / Nixxes)
+        video: "https://www.youtube.com/embed/Yw7oS6v1ZNY?rel=0",
+        desc: "Swing through NYC with ray-tracing, ultrawide, and DLSS/FSR support in the definitive PC edition by Nixxes & Insomniac.",
+        min: [
+          "CPU: Intel Core i3-4160 or AMD equivalent",
+          "RAM: 8 GB",
+          "GPU: GTX 950 or Radeon RX 470",
+          "Storage: 75 GB"
+        ],
+        rec: [
+          "CPU: Intel Core i5-4670 or Ryzen 5 1600",
+          "RAM: 16 GB",
+          "GPU: GTX 1060 6GB or RX 580 8GB",
+          "Storage: 75 GB SSD"
+        ]
+      },
+      cyberpunk: {
+        name: "Cyberpunk 2077",
+        genre: "RPG / Sci-Fi",
+        // Official gameplay trailer (CD PROJEKT RED)
+        video: "https://www.youtube.com/embed/qIcTM8WXFjk?rel=0",
+        desc: "Become V in Night City. Huge open world, deep RPG builds, and next-gen tech with path-tracing support on high-end GPUs.",
+        min: [
+          "CPU: Intel Core i7-6700 or Ryzen 5 1600",
+          "RAM: 12 GB",
+          "GPU: GTX 1060 6GB / RX 580 8GB / Arc A380",
+          "Storage: 70 GB SSD"
+        ],
+        rec: [
+          "CPU: Intel Core i7-12700 or Ryzen 7 7800X3D",
+          "RAM: 16 GB",
+          "GPU: RTX 2060 SUPER / RX 5700 XT / Arc A770",
+          "Storage: 70 GB SSD"
+        ]
+      }
+    };
+
+    // --- Price map (stable per load) ---
+    const priceMap = {};
+    const randPrice = () => {
+      // multiples of ₦500 between 2000–5000
+      const steps = [2000, 2500, 3000, 3500, 4000, 4500, 5000];
+      return steps[Math.floor(Math.random() * steps.length)];
+    };
+    const fmtNGN = v => new Intl.NumberFormat("en-NG", { style: "currency", currency: "NGN", maximumFractionDigits: 0 }).format(v);
+
+    // --- WhatsApp helpers ---
+    const WA_NUMBER = "2348130489824"; // 08130489824 in international format
+    const waLink = (gameName, price, action = "buy") => {
+      const msg = `Hello Ba Yi! I'd like to ${action} "${gameName}" for ${fmtNGN(price)}.`;
+      return `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(msg)}`;
+    };
+
+    // --- Modal elements ---
+    const modal = document.getElementById("gameModal");
+    const modalTitle = document.getElementById("modalTitle");
+    const modalGenre = document.getElementById("modalGenre");
+    const modalVideo = document.getElementById("modalVideo");
+    const modalDesc = document.getElementById("modalDesc");
+    const specsMin = document.getElementById("specsMin");
+    const specsRec = document.getElementById("specsRec");
+    const priceEl = document.getElementById("priceEl");
+    const buyNow = document.getElementById("buyNow");
+    const addCart = document.getElementById("addCart");
+    const modalBackdrop = document.getElementById("modalBackdrop");
+    const modalClose = document.getElementById("modalClose");
+
+    function openModal(key) {
+      const g = games[key];
+      if (!priceMap[key]) priceMap[key] = randPrice();
+
+      modalTitle.textContent = g.name;
+      modalGenre.textContent = g.genre;
+      modalVideo.src = g.video; // set embed
+      modalDesc.textContent = g.desc;
+
+      // Fill specs
+      specsMin.innerHTML = g.min.map(i => `<li>${i}</li>`).join("");
+      specsRec.innerHTML = g.rec.map(i => `<li>${i}</li>`).join("");
+
+      // Price + WA links
+      const price = priceMap[key];
+      priceEl.textContent = fmtNGN(price);
+      buyNow.href = waLink(g.name, price, "buy");
+      addCart.href = waLink(g.name, price, "add to cart");
+
+      // Show
+      modal.classList.remove("hidden");
+      modal.setAttribute("aria-hidden", "false");
+      document.body.classList.add("modal-open");
+    }
+
+    function closeModal() {
+      modal.classList.add("hidden");
+      modal.setAttribute("aria-hidden", "true");
+      // Stop video playback
+      modalVideo.src = "";
+      document.body.classList.remove("modal-open");
+    }
+
+    // Open handlers (event delegation)
+    document.addEventListener("click", (e) => {
+      const btn = e.target.closest("[data-game]");
+      if (btn) {
+        const key = btn.getAttribute("data-game");
+        openModal(key);
+      }
+    });
+
+    // Close handlers
+    modalBackdrop.addEventListener("click", closeModal);
+    modalClose.addEventListener("click", closeModal);
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && !modal.classList.contains("hidden")) closeModal();
+    });
+  </script>
+
+  <!--
+    Specs Sources (for your records):
+    GTA V: Rockstar Support, lists Enhanced & Legacy PC specs (last updated 2025-02-27).
+    FIFA 23: Steam/EA specs page.
+    Arkham Knight: WB Games Support specs article.
+    Spider-Man Remastered: PlayStation PC page (Insomniac/Nixxes).
+    Cyberpunk 2077: CD PROJEKT RED support page update (2023 onward).
+  -->
+</body>
+</html>

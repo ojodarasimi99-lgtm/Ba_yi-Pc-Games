@@ -1,0 +1,599 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Reviews • Ba Yi’s PC Games</title>
+
+  <!-- Tailwind -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;600;800&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: "Lexend", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial; background:#1b1544; color:#fff; }
+    .card { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.05); border-radius: 12px; }
+    .star { color: #fbbf24 } /* amber-400 for stars */
+    .no-scrollbar::-webkit-scrollbar { display: none; } .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    .sr-only{ position:absolute!important;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;}
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(6px) } to { opacity:1; transform: translateY(0) } }
+    .animate-fade { animation: fadeIn .22s ease-out; }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="fixed top-0 left-0 right-0 z-50 bg-[#1b1544]/80 backdrop-blur px-6 py-3 flex items-center justify-between">
+    <div class="flex items-center gap-3">
+      <img src="Ba_Yi’s Pc Games.png" alt="Ba Yi logo" class="h-10 w-10 rounded-full object-cover border-2 border-pink-400">
+      <div>
+        <div class="font-extrabold text-lg">Ba Yi’s PC Games</div>
+        <div class="text-xs text-gray-300">In-depth reviews & ratings</div>
+      </div>
+    </div>
+
+    <nav class="hidden md:flex gap-6 text-sm">
+      <a href="index.html" class="hover:text-pink-300">Home</a>
+      <a href="genres.html" class="hover:text-pink-300">Genres</a>
+      <a href="recommended.html" class="hover:text-pink-300">Recommended</a>
+      <a href="reviews.html" class="font-semibold text-pink-300">Reviews</a>
+      <a href="news.html" class="hover:text-pink-300">News</a>
+    </nav>
+  </header>
+
+  <div class="h-[68px]"></div> <!-- spacer -->
+
+  <!-- HERO -->
+  <main class="max-w-6xl mx-auto px-6 pb-20">
+    <section class="text-center mb-8">
+      <h1 class="text-4xl md:text-5xl font-extrabold">PC Game <span class="text-pink-400">Reviews</span></h1>
+      <p class="text-gray-300 mt-3 max-w-2xl mx-auto">Detailed reviews, system specs, ratings, and player feedback. Search, filter by genre, or add your own review.</p>
+    </section>
+
+    <!-- Controls -->
+    <section class="mb-6 flex flex-col md:flex-row items-start md:items-center gap-3">
+      <div class="flex gap-3 w-full md:w-auto items-center">
+        <input id="searchInput" type="search" placeholder="Search reviews..." aria-label="Search reviews"
+          class="px-3 py-2 rounded-lg bg-white/6 placeholder:text-gray-400 w-full md:w-[360px] focus:outline-none focus:ring-2 focus:ring-pink-400" />
+        <select id="sortSelect" class="px-3 py-2 rounded-lg bg-white/6">
+          <option value="featured">Featured</option>
+          <option value="rating_desc">Rating ↓</option>
+          <option value="rating_asc">Rating ↑</option>
+          <option value="date_desc">Newest</option>
+          <option value="date_asc">Oldest</option>
+        </select>
+      </div>
+
+      <div class="ml-auto flex items-center gap-3">
+        <div id="genreChips" class="flex gap-2 flex-wrap"></div>
+        <button id="openSubmit" class="px-4 py-2 rounded-lg bg-pink-500 hover:bg-pink-600">Write a review</button>
+      </div>
+    </section>
+
+    <!-- Summary bar -->
+    <div class="mb-6 flex items-center justify-between text-sm text-gray-300">
+      <div id="resultsSummary">Showing <strong id="shownCount">0</strong> of <span id="totalCount">0</span> reviews</div>
+      <div id="activeFilters" class="text-gray-400"></div>
+    </div>
+
+    <!-- Review Grid -->
+    <section id="reviewsGrid" class="grid gap-6 md:grid-cols-2 lg:grid-cols-3"></section>
+
+    <div class="mt-8 flex justify-center">
+      <button id="loadMoreBtn" class="px-4 py-2 rounded-lg bg-white/6 hover:bg-white/10">Load more</button>
+    </div>
+  </main>
+
+  <!-- Review Modal -->
+  <div id="reviewModal" class="fixed inset-0 z-60 hidden">
+    <div id="modalBackdrop" class="absolute inset-0 bg-black/75"></div>
+    <div class="relative mx-auto max-w-4xl mt-[6vh] bg-[#151039] rounded-2xl border border-pink-400/20 p-4 md:p-6 overflow-y-auto max-h-[84vh] animate-fade">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h2 id="modalTitle" class="text-xl md:text-2xl font-bold"></h2>
+          <div id="modalMeta" class="text-sm text-pink-300 mt-1"></div>
+        </div>
+        <div class="flex items-center gap-3">
+          <button id="modalBookmark" class="px-3 py-1 rounded-md bg-white/6">Bookmark</button>
+          <button id="modalClose" class="text-white/80 text-2xl">&times;</button>
+        </div>
+      </div>
+
+      <div class="mt-4 grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div class="md:col-span-2">
+          <img id="modalCover" src="" alt="" class="w-full h-64 object-cover rounded-lg bg-black/20"/>
+          <div id="modalBody" class="mt-4 text-gray-200 leading-relaxed"></div>
+        </div>
+
+        <aside class="md:col-span-1 space-y-4">
+          <div class="card p-4">
+            <h4 class="font-semibold">Score</h4>
+            <div id="modalScore" class="text-4xl font-extrabold text-pink-400 mt-2"></div>
+            <div id="modalStars" class="mt-2 text-lg"></div>
+          </div>
+
+          <div class="card p-4">
+            <h4 class="font-semibold">System Requirements</h4>
+            <ul id="modalSpecs" class="mt-2 text-sm text-gray-300 list-disc list-inside"></ul>
+          </div>
+
+          <div class="card p-4">
+            <h4 class="font-semibold">Player feedback</h4>
+            <div id="helpfulArea" class="mt-2 text-sm text-gray-300">Was this review helpful? <div class="mt-2 flex gap-2"><button id="helpYes" class="px-3 py-1 rounded bg-white/6">Yes</button><button id="helpNo" class="px-3 py-1 rounded bg-white/6">No</button></div></div>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </div>
+
+  <!-- Submit Review Modal -->
+  <div id="submitModal" class="fixed inset-0 z-60 hidden">
+    <div class="absolute inset-0 bg-black/70"></div>
+    <form id="submitForm" class="relative mx-auto mt-8 max-w-2xl bg-[#151039] rounded-2xl border border-pink-400/20 p-4 md:p-6 overflow-y-auto max-h-[84vh]">
+      <div class="flex items-center justify-between mb-2">
+        <h3 class="text-lg font-bold">Write a review</h3>
+        <button type="button" id="submitClose" class="text-2xl text-white/80">&times;</button>
+      </div>
+      <div class="space-y-3">
+        <label class="block text-sm text-gray-300">Game title <input name="title" required class="mt-1 w-full px-3 py-2 rounded bg-white/6" /></label>
+        <label class="block text-sm text-gray-300">Cover image path (e.g. images/reviews/your.jpg) <input name="image" class="mt-1 w-full px-3 py-2 rounded bg-white/6" /></label>
+        <label class="block text-sm text-gray-300">Genres (comma separated) <input name="genres" class="mt-1 w-full px-3 py-2 rounded bg-white/6" /></label>
+        <label class="block text-sm text-gray-300">Score (0-100) <input name="score" type="number" min="0" max="100" class="mt-1 w-full px-3 py-2 rounded bg-white/6" /></label>
+        <label class="block text-sm text-gray-300">Review text <textarea name="body" rows="6" class="mt-1 w-full px-3 py-2 rounded bg-white/6"></textarea></label>
+
+        <div class="flex justify-end gap-3">
+          <button type="button" id="submitCancel" class="px-4 py-2 rounded bg-white/6">Cancel</button>
+          <button type="submit" class="px-4 py-2 rounded bg-pink-500 hover:bg-pink-600">Publish</button>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <!-- Toast -->
+  <div id="toastArea" class="fixed right-6 top-6 z-50"></div>
+
+<script>
+/* ============================
+   Sample reviews dataset (edit images in images/reviews/)
+   Add more entries here or fetch from JSON later.
+   Each review: { id, title, image, date, genres:[], score(0-100), body, specs:{min:[],rec:[]} }
+   ============================ */
+const SAMPLE_REVIEWS = [
+  {
+    id: "r-gta5",
+    title: "GTA V — Still the Ultimate Open World",
+    image: "images/reviews/gta5.jpg",
+    date: "2025-08-12",
+    genres: ["Open World","Action"],
+    score: 92,
+    body: "<p>Rockstar's GTA V remains a technical and gameplay triumph on PC. Between mods and DLC options, it's still a go-to sandbox.</p><p>Pros: huge map, deep systems. Cons: some older netcode issues.</p>",
+    specs: {
+      min: ["Intel i5-3470 / AMD FX-6300", "8 GB RAM", "GTX 760 / R9 280", "65 GB"],
+      rec: ["Intel i7-4770K / Ryzen 5 1600", "16 GB RAM", "GTX 1060 / RX 580", "65 GB SSD"]
+    }
+  },
+  {
+    id: "r-elden",
+    title: "Elden Ring — A Masterpiece of Design",
+    image: "images/reviews/elden.jpg",
+    date: "2025-02-18",
+    genres: ["RPG","Action"],
+    score: 97,
+    body: "<p>Elden Ring expands FromSoft's design philosophy to a vast open world. The sense of discovery is unmatched.</p>",
+    specs: {
+      min: ["i5-8400", "8 GB RAM", "GTX 1060 3GB", "60 GB"],
+      rec: ["i7-8700K", "16 GB RAM", "GTX 1080 / RTX 2060", "60 GB SSD"]
+    }
+  },
+  {
+    id: "r-spidey",
+    title: "Spider-Man Remastered — Swinging With Ray Tracing",
+    image: "images/reviews/spidey.jpg",
+    date: "2024-11-05",
+    genres: ["Action","Adventures"],
+    score: 89,
+    body: "<p>Beautiful PC port with ray-tracing and high framerates. Fantastic traversal and combat.</p>",
+    specs: {
+      min: ["i5-4460", "8 GB RAM", "GTX 970", "75 GB"],
+      rec: ["i7-6700K", "16 GB RAM", "RTX 2060", "75 GB SSD"]
+    }
+  },
+  {
+    id: "r-valheim",
+    title: "Valheim — Cozy Survival That Hooks You In",
+    image: "images/reviews/valheim.jpg",
+    date: "2023-09-10",
+    genres: ["Survival","Indie"],
+    score: 84,
+    body: "<p>Valheim nails cooperative survival with tight progression and charming visuals. Great for co-op sessions.</p>",
+    specs: {
+      min: ["i5-2400", "8 GB RAM", "GTX 750", "1 GB"],
+      rec: ["i5-6600", "8 GB RAM", "GTX 970", "1 GB SSD"]
+    }
+  },
+  {
+    id: "r-doom",
+    title: "Doom Eternal — Speed & Brutality",
+    image: "images/reviews/doom.jpg",
+    date: "2020-03-20",
+    genres: ["Shooter","Action"],
+    score: 88,
+    body: "<p>Fast-paced shooter that rewards aggression and skill. Excellent level design and soundtrack.</p>",
+    specs: {
+      min: ["i5-4460", "8 GB RAM", "GTX 780", "50 GB"],
+      rec: ["i7-7700K", "16 GB RAM", "GTX 1080 Ti", "50 GB SSD"]
+    }
+  },
+  {
+    id: "r-cyber",
+    title: "Cyberpunk 2077 — Redemption & Polishing",
+    image: "images/reviews/cyber.jpg",
+    date: "2025-01-15",
+    genres: ["RPG","Action"],
+    score: 78,
+    body: "<p>After many patches, Cyberpunk delivers a solid narrative and interesting systems. Some bugs remain, but it's in a much better place.</p>",
+    specs: {
+      min: ["i5-3570K", "8 GB RAM", "GTX 780", "70 GB"],
+      rec: ["i7-7700K", "16 GB RAM", "RTX 2060", "70 GB SSD"]
+    }
+  }
+];
+
+/* ============================
+   App state & persistence
+   ============================ */
+const STORAGE_KEY = "by_reviews_v1";
+const BOOKMARK_KEY = "by_reviews_bookmarks";
+const HELPFUL_KEY = "by_reviews_helpful"; // map of id -> {yes:number,no:number}
+let reviews = JSON.parse(localStorage.getItem(STORAGE_KEY) || "null");
+if (!reviews) {
+  reviews = SAMPLE_REVIEWS.slice();
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(reviews));
+}
+let bookmarks = JSON.parse(localStorage.getItem(BOOKMARK_KEY) || "[]");
+let helpful = JSON.parse(localStorage.getItem(HELPFUL_KEY) || "{}");
+
+/* UI references */
+const reviewsGrid = document.getElementById("reviewsGrid");
+const shownCountEl = document.getElementById("shownCount");
+const totalCountEl = document.getElementById("totalCount");
+const loadMoreBtn = document.getElementById("loadMoreBtn");
+const searchInput = document.getElementById("searchInput");
+const sortSelect = document.getElementById("sortSelect");
+const genreChips = document.getElementById("genreChips");
+const resultsSummary = document.getElementById("resultsSummary");
+const activeFiltersEl = document.getElementById("activeFilters");
+
+/* Modal refs */
+const reviewModal = document.getElementById("reviewModal");
+const modalBackdrop = document.getElementById("modalBackdrop");
+const modalTitle = document.getElementById("modalTitle");
+const modalMeta = document.getElementById("modalMeta");
+const modalCover = document.getElementById("modalCover");
+const modalBody = document.getElementById("modalBody");
+const modalScore = document.getElementById("modalScore");
+const modalStars = document.getElementById("modalStars");
+const modalSpecs = document.getElementById("modalSpecs");
+const modalBookmark = document.getElementById("modalBookmark");
+const helpYes = document.getElementById("helpYes");
+const helpNo = document.getElementById("helpNo");
+const modalClose = document.getElementById("modalClose");
+
+/* Submit modal refs */
+const submitModal = document.getElementById("submitModal");
+const openSubmitBtn = document.getElementById("openSubmit");
+const submitClose = document.getElementById("submitClose");
+const submitCancel = document.getElementById("submitCancel");
+const submitForm = document.getElementById("submitForm");
+
+/* Paging / filters */
+let pageSize = 6;
+let page = 1;
+let activeGenres = []; // filter list
+let searchQuery = "";
+let sortMode = "featured";
+
+/* Utility: format score to stars (5-star scale) */
+function scoreToStars(score){
+  const stars = Math.round(score/20); // 0..5
+  return "★".repeat(stars) + "☆".repeat(5-stars);
+}
+
+/* Build unique genres from reviews */
+function getAllGenres(){
+  const g = new Set();
+  reviews.forEach(r => (r.genres || []).forEach(x => g.add(x)));
+  return Array.from(g).sort();
+}
+
+/* Render genre chips */
+function renderGenreChips(){
+  genreChips.innerHTML = "";
+  const all = getAllGenres();
+  all.forEach(g => {
+    const btn = document.createElement("button");
+    btn.className = `px-3 py-1 rounded-full ${activeGenres.includes(g) ? 'bg-pink-500' : 'bg-white/6'} text-sm`;
+    btn.textContent = g;
+    btn.addEventListener("click", ()=> {
+      const idx = activeGenres.indexOf(g);
+      if (idx === -1) activeGenres.push(g); else activeGenres.splice(idx,1);
+      page = 1;
+      render();
+    });
+    genreChips.appendChild(btn);
+  });
+}
+
+/* Save helpers */
+function saveReviews(){ localStorage.setItem(STORAGE_KEY, JSON.stringify(reviews)); }
+function saveBookmarks(){ localStorage.setItem(BOOKMARK_KEY, JSON.stringify(bookmarks)); }
+function saveHelpful(){ localStorage.setItem(HELPFUL_KEY, JSON.stringify(helpful)); }
+
+/* Toast */
+function toast(msg){
+  const area = document.getElementById("toastArea");
+  const t = document.createElement("div");
+  t.className = "bg-black/80 text-white px-4 py-2 rounded mb-2";
+  t.textContent = msg;
+  area.appendChild(t);
+  setTimeout(()=> t.classList.add("opacity-0"), 1400);
+  setTimeout(()=> t.remove(), 1800);
+}
+
+/* Render review card (single) */
+function createReviewCard(r){
+  const card = document.createElement("article");
+  card.className = "card p-3 rounded-lg overflow-hidden cursor-pointer animate-fade";
+  card.tabIndex = 0;
+  card.setAttribute("data-id", r.id);
+
+  const genres = (r.genres || []).map(g => `<span class="text-xs px-2 py-1 rounded bg-white/6 mr-1">${g}</span>`).join("");
+
+  card.innerHTML = `
+    <div class="h-40 bg-black/20 rounded overflow-hidden">
+      <img src="${r.image}" alt="${r.title}" class="w-full h-full object-cover" loading="lazy" onerror="this.style.display='none'">
+    </div>
+    <div class="mt-3">
+      <div class="flex items-start justify-between gap-3">
+        <h3 class="font-semibold text-lg">${r.title}</h3>
+        <div class="text-right">
+          <div class="text-pink-400 font-extrabold">${r.score}</div>
+          <div class="text-xs text-gray-400">${scoreToStars(r.score)}</div>
+        </div>
+      </div>
+      <div class="text-xs text-gray-300 mt-2">${genres}</div>
+      <p class="text-gray-200 mt-3 line-clamp-4">${stripHtml(r.body).slice(0,220)}${stripHtml(r.body).length>220?"...":""}</p>
+      <div class="mt-3 flex items-center justify-between">
+        <div class="text-xs text-gray-400">${new Date(r.date).toDateString()}</div>
+        <div class="flex items-center gap-2">
+          <button class="bookmark-btn px-2 py-1 rounded text-sm ${bookmarks.includes(r.id) ? 'bg-pink-500' : 'bg-white/6'}" data-id="${r.id}">${bookmarks.includes(r.id) ? 'Saved' : 'Save'}</button>
+          <button class="read-more text-xs text-pink-400" data-id="${r.id}">Read</button>
+        </div>
+      </div>
+    </div>
+  `;
+
+  // open modal on click or keyboard
+  card.addEventListener("click", (e) => {
+    if (e.target.closest(".bookmark-btn")) return;
+    openModal(r.id);
+  });
+  card.addEventListener("keydown", (e) => {
+    if ((e.key === "Enter" || e.key === " ") && document.activeElement === card) {
+      openModal(r.id);
+    }
+  });
+
+  // bookmark delegation
+  card.querySelectorAll(".bookmark-btn").forEach(b => {
+    b.addEventListener("click", (ev)=>{
+      ev.stopPropagation();
+      const id = b.dataset.id;
+      toggleBookmark(id, b);
+    });
+  });
+
+  // read button
+  card.querySelectorAll(".read-more").forEach(bt => {
+    bt.addEventListener("click", (ev) => {
+      ev.stopPropagation();
+      openModal(bt.dataset.id);
+    });
+  });
+
+  return card;
+}
+
+/* strip html helper */
+function stripHtml(html){ const tmp = document.createElement("div"); tmp.innerHTML = html; return tmp.textContent || tmp.innerText || ""; }
+
+/* Build filtered + sorted list and render up to page*pageSize items */
+function buildList(){
+  let list = reviews.slice();
+
+  // search
+  if (searchQuery) {
+    const q = searchQuery.toLowerCase();
+    list = list.filter(r => (r.title + " " + (r.genres||[]).join(" ") + " " + stripHtml(r.body)).toLowerCase().includes(q));
+  }
+
+  // genre filter
+  if (activeGenres.length > 0) {
+    list = list.filter(r => (r.genres || []).some(g => activeGenres.includes(g)));
+  }
+
+  // sort
+  if (sortMode === "rating_desc") list.sort((a,b) => b.score - a.score);
+  else if (sortMode === "rating_asc") list.sort((a,b) => a.score - b.score);
+  else if (sortMode === "date_desc") list.sort((a,b) => new Date(b.date) - new Date(a.date));
+  else if (sortMode === "date_asc") list.sort((a,b) => new Date(a.date) - new Date(b.date));
+  // featured default: keep original order (or by score desc)
+  else list.sort((a,b) => b.score - a.score);
+
+  return list;
+}
+
+/* Render page */
+function render(){
+  renderGenreChips(); // maybe updated
+  const list = buildList();
+  const total = list.length;
+  totalCountEl.textContent = total;
+  const end = Math.min(page * pageSize, total);
+  const visible = list.slice(0, end);
+
+  reviewsGrid.innerHTML = "";
+  visible.forEach(r => reviewsGrid.appendChild(createReviewCard(r)));
+  shownCountEl.textContent = visible.length;
+  activeFiltersEl.textContent = activeGenres.length ? `Filters: ${activeGenres.join(", ")}` : "";
+  loadMoreBtn.style.display = end < total ? "" : "none";
+}
+
+/* Load more */
+loadMoreBtn.addEventListener("click", ()=>{
+  page++;
+  render();
+});
+
+/* Search & sort handlers */
+searchInput.addEventListener("input", (e)=>{
+  searchQuery = e.target.value.trim();
+  page = 1;
+  render();
+});
+sortSelect.addEventListener("change", (e)=>{
+  sortMode = e.target.value;
+  page = 1;
+  render();
+});
+
+/* Bookmark toggle */
+function toggleBookmark(id, btnEl){
+  if (bookmarks.includes(id)) {
+    bookmarks = bookmarks.filter(x => x !== id);
+    toast("Removed bookmark");
+  } else {
+    bookmarks.push(id);
+    toast("Saved to bookmarks");
+  }
+  saveBookmarks();
+  if (btnEl) {
+    btnEl.classList.toggle("bg-pink-500", bookmarks.includes(id));
+    btnEl.classList.toggle("bg-white/6", !bookmarks.includes(id));
+    btnEl.textContent = bookmarks.includes(id) ? 'Saved' : 'Save';
+  }
+}
+
+/* Open modal with review details */
+function openModal(id){
+  const r = reviews.find(x => x.id === id);
+  if (!r) return;
+  modalTitle.textContent = r.title;
+  modalMeta.textContent = `${new Date(r.date).toDateString()} • ${ (r.genres||[]).join(" • ") }`;
+  modalCover.src = r.image || "";
+  modalCover.alt = r.title;
+  modalBody.innerHTML = r.body;
+  modalScore.textContent = r.score;
+  modalStars.innerHTML = `<div class="text-lg star">${scoreToStars(r.score)}</div>`;
+  modalSpecs.innerHTML = "";
+  (r.specs && r.specs.min || []).forEach(s => {
+    const li = document.createElement("li"); li.textContent = s; modalSpecs.appendChild(li);
+  });
+  (r.specs && r.specs.rec || []).forEach(s => {
+    const li = document.createElement("li"); li.textContent = s; modalSpecs.appendChild(li);
+  });
+
+  // helpful counts
+  const counts = helpful[r.id] || {yes:0, no:0};
+  document.getElementById("helpYes").textContent = `Yes (${counts.yes||0})`;
+  document.getElementById("helpNo").textContent = `No (${counts.no||0})`;
+
+  // bookmark state
+  modalBookmark.textContent = bookmarks.includes(r.id) ? 'Saved' : 'Bookmark';
+  modalBookmark.dataset.id = r.id;
+
+  reviewModal.classList.remove("hidden"); document.body.classList.add("modal-open");
+}
+
+/* close modal */
+function closeModal(){
+  reviewModal.classList.add("hidden"); document.body.classList.remove("modal-open");
+}
+modalClose.addEventListener("click", closeModal);
+modalBackdrop.addEventListener("click", closeModal);
+
+/* modal bookmark */
+modalBookmark.addEventListener("click", (e)=>{
+  const id = e.target.dataset.id;
+  toggleBookmark(id, modalBookmark);
+  modalBookmark.textContent = bookmarks.includes(id) ? 'Saved' : 'Bookmark';
+});
+
+/* helpful vote */
+helpYes.addEventListener("click", ()=>{
+  const id = modalBookmark.dataset.id;
+  if (!id) return;
+  helpful[id] = helpful[id] || {yes:0,no:0};
+  helpful[id].yes = (helpful[id].yes||0) + 1;
+  saveHelpful();
+  helpYes.textContent = `Yes (${helpful[id].yes})`;
+});
+helpNo.addEventListener("click", ()=>{
+  const id = modalBookmark.dataset.id;
+  if (!id) return;
+  helpful[id] = helpful[id] || {yes:0,no:0};
+  helpful[id].no = (helpful[id].no||0) + 1;
+  saveHelpful();
+  helpNo.textContent = `No (${helpful[id].no})`;
+});
+
+/* Submit review modal open/close */
+openSubmitBtn.addEventListener("click", ()=>{ submitModal.classList.remove("hidden"); document.body.classList.add("modal-open"); });
+submitClose.addEventListener("click", ()=>{ submitModal.classList.add("hidden"); document.body.classList.remove("modal-open"); });
+submitCancel.addEventListener("click", (e)=>{ submitModal.classList.add("hidden"); document.body.classList.remove("modal-open"); });
+
+/* handle new review submit */
+submitForm.addEventListener("submit", (e)=>{
+  e.preventDefault();
+  const fd = new FormData(submitForm);
+  const title = fd.get("title") || "Untitled";
+  const image = fd.get("image") || "images/reviews/placeholder.jpg";
+  const genres = (fd.get("genres") || "").split(",").map(s => s.trim()).filter(Boolean);
+  const score = Number(fd.get("score") || 0);
+  const body = fd.get("body") || "";
+  const id = "r-" + Date.now();
+  const newReview = {
+    id, title, image, date: new Date().toISOString().slice(0,10),
+    genres, score, body,
+    specs: { min: ["Unknown"], rec: [] }
+  };
+  reviews.unshift(newReview);
+  saveReviews();
+  submitForm.reset();
+  submitModal.classList.add("hidden");
+  document.body.classList.remove("modal-open");
+  page = 1;
+  render();
+  toast("Review published (stored locally)");
+});
+
+/* initial render */
+render();
+renderGenreChips();
+
+/* respond to storage events (if user edits on another tab) */
+window.addEventListener("storage", (e)=>{
+  if (e.key === STORAGE_KEY) {
+    reviews = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
+    render();
+  }
+});
+
+/* small accessibility: close modals with Escape */
+document.addEventListener("keydown", (e)=>{
+  if (e.key === "Escape") {
+    if (!reviewModal.classList.contains("hidden")) closeModal();
+    if (!submitModal.classList.contains("hidden")) { submitModal.classList.add("hidden"); document.body.classList.remove("modal-open"); }
+  }
+});
+</script>
+</body>
+</html>

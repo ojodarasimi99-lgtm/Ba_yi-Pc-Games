@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>News • Ba Yi’s PC Games</title>
+
+  <!-- Tailwind -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;600;800&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: "Lexend", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial; background:#1b1544; color:#fff; }
+    .card { background: rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.05); border-radius:12px; }
+    .no-scrollbar::-webkit-scrollbar { display: none; } .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    .sr-only{ position:absolute!important;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;}
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(8px) } to { opacity:1; transform: translateY(0) } }
+    .animate-fade { animation: fadeIn .22s ease-out; }
+  </style>
+</head>
+<body class="antialiased">
+
+  <!-- Header -->
+  <header class="fixed top-0 left-0 right-0 z-50 bg-[#1b1544]/80 backdrop-blur px-6 py-3 flex items-center justify-between">
+    <div class="flex items-center gap-3">
+      <img src="Ba_Yi’s Pc Games.png" alt="Ba Yi's logo" class="h-10 w-10 rounded-full object-cover border-2 border-pink-400">
+      <div>
+        <div class="font-extrabold text-lg">Ba Yi’s PC Games</div>
+        <div class="text-xs text-gray-300">News & updates</div>
+      </div>
+    </div>
+
+    <nav class="hidden md:flex gap-6 text-sm">
+      <a href="index.html" class="hover:text-pink-300">Home</a>
+      <a href="genres.html" class="hover:text-pink-300">Genres</a>
+      <a href="recommended.html" class="hover:text-pink-300">Recommended</a>
+      <a href="news.html" class="font-semibold text-pink-300">News</a>
+      <a href="market.html" class="hover:text-pink-300">Market</a>
+    </nav>
+  </header>
+
+  <div class="h-[68px]"></div>
+
+  <!-- HERO -->
+  <main class="max-w-6xl mx-auto px-6 pb-20">
+    <section class="text-center mb-8">
+      <h1 class="text-4xl md:text-5xl font-extrabold leading-tight">Latest <span class="text-pink-400">Gaming News</span></h1>
+      <p class="text-gray-300 mt-3 max-w-3xl mx-auto">Announcements, patch notes, PC updates, and curated articles. Filter by category or search for topics.</p>
+    </section>
+
+    <!-- Controls -->
+    <section class="flex flex-col md:flex-row items-stretch md:items-center gap-3 mb-6">
+      <div class="flex gap-3 w-full md:w-auto">
+        <input id="newsSearch" type="search" placeholder="Search news, patches, or keywords..." aria-label="Search news"
+          class="px-3 py-2 rounded-lg bg-white/6 placeholder:text-gray-400 w-full md:w-[420px] focus:outline-none focus:ring-2 focus:ring-pink-400" />
+
+        <select id="newsSort" class="px-3 py-2 rounded-lg bg-white/6 focus:outline-none">
+          <option value="date_desc">Newest first</option>
+          <option value="date_asc">Oldest first</option>
+          <option value="popular">Most popular</option>
+        </select>
+      </div>
+
+      <div class="ml-auto flex items-center gap-3">
+        <div id="categoryFilters" class="flex gap-2 flex-wrap"></div>
+        <button id="clearFilters" class="px-3 py-2 rounded-lg bg-white/6 hover:bg-white/10">Clear</button>
+        <button id="downloadRss" class="px-3 py-2 rounded-lg bg-pink-500 hover:bg-pink-600">Download RSS</button>
+      </div>
+    </section>
+
+    <!-- Controls meta -->
+    <div class="flex items-center justify-between mb-4">
+      <div class="text-sm text-gray-300" id="resultsInfo" aria-live="polite">Showing latest articles</div>
+      <div class="text-sm text-gray-400" id="pageInfo"></div>
+    </div>
+
+    <!-- GRID + SIDEBAR -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <!-- MAIN LIST -->
+      <div class="lg:col-span-2">
+        <div id="newsGrid" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
+
+        <div class="mt-6 flex justify-center">
+          <button id="loadMore" class="px-4 py-2 rounded-lg bg-white/6 hover:bg-white/10">Load more</button>
+        </div>
+      </div>
+
+      <!-- SIDEBAR -->
+      <aside class="space-y-4">
+        <div class="card p-4">
+          <h3 class="font-semibold mb-3">Top stories</h3>
+          <div id="topStories" class="space-y-3"></div>
+        </div>
+
+        <div class="card p-4">
+          <h3 class="font-semibold mb-3">Tags</h3>
+          <div id="tagList" class="flex flex-wrap gap-2"></div>
+        </div>
+
+        <div class="card p-4">
+          <h3 class="font-semibold mb-3">Subscribe</h3>
+          <p class="text-sm text-gray-300 mb-3">Get a simple RSS file or save this page as a bookmark.</p>
+          <button id="subscribeBtn" class="px-3 py-2 rounded-lg bg-pink-500 hover:bg-pink-600 w-full">Download RSS</button>
+        </div>
+      </aside>
+    </div>
+  </main>
+
+  <!-- Article Modal -->
+  <div id="articleModal" class="fixed inset-0 z-60 hidden">
+    <div id="modalBackdrop" class="absolute inset-0 bg-black/75"></div>
+    <article class="relative mx-auto max-w-4xl mt-[6vh] bg-[#151039] rounded-2xl border border-pink-400/20 p-4 md:p-6 overflow-y-auto max-h-[84vh]">
+      <div class="flex items-start justify-between gap-4">
+        <div>
+          <h2 id="modalTitle" class="text-xl md:text-2xl font-bold"></h2>
+          <div id="modalMeta" class="text-sm text-pink-300 mt-1"></div>
+        </div>
+        <div class="flex items-center gap-3">
+          <button id="bookmarkBtn" class="px-3 py-1 rounded-md bg-white/6">Bookmark</button>
+          <button id="shareWhatsBtn" class="px-3 py-1 rounded-md bg-pink-500 hover:bg-pink-600">Share</button>
+          <button id="modalCloseBtn" class="text-white/80 text-2xl">&times;</button>
+        </div>
+      </div>
+
+      <div id="modalContent" class="mt-4 prose prose-invert max-w-none text-gray-200"></div>
+
+      <div id="modalFooter" class="mt-4 flex items-center justify-between text-sm text-gray-300">
+        <div id="modalTags"></div>
+        <div>
+          <button id="markReadBtn" class="px-3 py-1 rounded-md bg-white/6">Mark as read</button>
+          <a id="openOriginal" class="ml-2 text-pink-300" href="#" target="_blank" rel="noopener">Open original</a>
+        </div>
+      </div>
+    </article>
+  </div>
+
+  <!-- small toast -->
+  <div id="toast" class="fixed right-6 top-6 z-50"></div>
+
+<script>
+/* ============================
+   Demo dataset (replace with real data)
+   ============================ */
+const NEWS = [
+  {
+    id: "n1",
+    title: "GTA V: New PC Mod Tools Released — Performance Guide",
+    excerpt: "Rockstar's mod tools for GTA V on PC add new possibilities. Here's how to optimize performance and keep your game stable.",
+    body: "<p>Rockstar released official mod tools today. Modders can now create high-quality content. <strong>Important</strong>: back up saves.</p><p>Tips: lower shadow detail, use 8GB swap if you run out of RAM.</p>",
+    date: "2025-08-15T10:00:00Z",
+    tags: ["PC","GTA V","Modding"],
+    image: "news_gta_mod.jpg",
+    source: "Ba Yi Editorial",
+    url: "#"
+  },
+  {
+    id: "n2",
+    title: "Elden Ring Patch 1.08 — Quality of Life & Balance",
+    excerpt: "The new update adjusts combat balance and fixes a handful of progression blocks. Here's what's changing.",
+    body: "<p>Patch 1.08 tweaks weapon scaling and addresses certain boss AI. Multiplayer matchmaking fixes are included.</p>",
+    date: "2025-09-01T08:00:00Z",
+    tags: ["Elden Ring","Patch","RPG"],
+    image: "news_elden_patch.jpg",
+    source: "FromDev Blog",
+    url: "#"
+  },
+  {
+    id: "n3",
+    title: "How to Tune Your PC for Spider-Man Remastered Ray Tracing",
+    excerpt: "Ray tracing can be demanding. This guide shows how to get smooth FPS without losing visual fidelity.",
+    body: "<p>Lower reflections and use DLSS where available. Tweaking LOD distance helps keep frame-time stable.</p>",
+    date: "2025-07-22T12:00:00Z",
+    tags: ["Spider-Man","RTX","Guide"],
+    image: "news_spidey_rt.jpg",
+    source: "Ba Yi Guides",
+    url: "#"
+  },
+  {
+    id: "n4",
+    title: "Indie Spotlight: Valheim Servers & Co-op Tips",
+    excerpt: "Running a Valheim server? Here are best practices for co-op and preserving world saves.",
+    body: "<p>Use scheduled backups, avoid too many creatures spawning, and optimize server GC settings.</p>",
+    date: "2025-06-10T09:00:00Z",
+    tags: ["Valheim","Indie","Co-op"],
+    image: "news_valheim.jpg",
+    source: "Community",
+    url: "#"
+  },
+  {
+    id: "n5",
+    title: "Cyberpunk 2077: Patch Summary & Mod Compatibility",
+    excerpt: "Patch notes and a compatibility checklist for popular mods.",
+    body: "<p>Patch improved stability. Mods that alter UI may need updating.</p>",
+    date: "2025-08-30T06:00:00Z",
+    tags: ["Cyberpunk","Patch","Mods"],
+    image: "news_cyber.jpg",
+    source: "CDPR",
+    url: "#"
+  },
+  {
+    id: "n6",
+    title: "Top 10 Budget Games for 2025",
+    excerpt: "Looking for great games that won't break the bank? Here's a curated list.",
+    body: "<p>From classics to hidden gems, this list covers cheap games that still deliver hours of fun.</p>",
+    date: "2025-05-02T11:00:00Z",
+    tags: ["List","Budget","Recommended"],
+    image: "news_budget.jpg",
+    source: "Ba Yi Picks",
+    url: "#"
+  }
+];
+
+/* ============================
+   App state & utilities
+   ============================ */
+const PAGE_SIZE = 4;
+let currentPage = 1;
+let pageCount = Math.ceil(NEWS.length / PAGE_SIZE);
+let activeCategory = null; // tag
+let searchQuery = "";
+let sortMode = "date_desc"; // date_desc | date_asc | popular
+const BOOKMARK_KEY = "by_news_bookmarks";
+const READ_KEY = "by_news_read";
+
+let bookmarks = JSON.parse(localStorage.getItem(BOOKMARK_KEY) || "[]");
+let readItems = JSON.parse(localStorage.getItem(READ_KEY) || "[]");
+
+const newsGrid = document.getElementById("newsGrid");
+const resultsInfo = document.getElementById("resultsInfo");
+const pageInfo = document.getElementById("pageInfo");
+const categoryFilters = document.getElementById("categoryFilters");
+const tagList = document.getElementById("tagList");
+const topStories = document.getElementById("topStories");
+const loadMoreBtn = document.getElementById("loadMore");
+
+/* friendly date formatting */
+function formatDate(iso){
+  const d = new Date(iso);
+  const now = new Date();
+  const diff = (now - d) / 1000; // seconds
+  if (diff < 60*60*24) {
+    // show relative hours/minutes
+    if (diff < 60*60) return Math.floor(diff/60) + "m ago";
+    return Math.floor(diff/3600) + "h ago";
+  }
+  return d.toLocaleDateString();
+}
+
+/* generate set of tags */
+function allTags(){
+  const s = new Set();
+  NEWS.forEach(n => (n.tags || []).forEach(t => s.add(t)));
+  return Array.from(s).sort();
+}
+
+/* simple popularity score (for demo) */
+function popularityScore(item){
+  // artificially compute score from date and random for demo
+  const ageDays = (Date.now() - new Date(item.date)) / (1000*60*60*24);
+  return Math.max(0, 100 - ageDays) + Math.random()*10;
+}
+
+/* build an article card */
+function buildCard(article){
+  const isBookmarked = bookmarks.includes(article.id);
+  const isRead = readItems.includes(article.id);
+  const html = document.createElement("article");
+  html.className = "card p-3 flex flex-col gap-3 animate-fade cursor-pointer";
+  html.tabIndex = 0;
+  html.setAttribute("data-id", article.id);
+  html.innerHTML = `
+    <div class="h-40 bg-black/20 rounded overflow-hidden flex items-center justify-center">
+      <img src="${article.image}" alt="${article.title}" class="object-cover w-full h-full" loading="lazy" onerror="this.style.display='none'">
+    </div>
+    <div class="flex-1">
+      <div class="flex items-start justify-between gap-3">
+        <h3 class="font-semibold text-lg">${article.title}</h3>
+        <div class="text-xs text-gray-400">${formatDate(article.date)}</div>
+      </div>
+      <p class="text-sm text-gray-300 mt-1 line-clamp-3">${article.excerpt}</p>
+      <div class="mt-2 flex items-center justify-between">
+        <div class="flex gap-2 items-center">
+          ${ (article.tags || []).map(t => `<span class="text-xs px-2 py-1 rounded bg-white/6 text-gray-200">${t}</span>`).join("") }
+        </div>
+        <div class="flex gap-2 items-center">
+          <button class="bookmark-btn px-2 py-1 rounded text-sm ${isBookmarked ? 'bg-pink-500' : 'bg-white/6'}" data-id="${article.id}" aria-pressed="${isBookmarked}">${isBookmarked ? 'Saved' : 'Save'}</button>
+          <button class="share-btn px-2 py-1 rounded bg-pink-500 text-sm" data-id="${article.id}">Share</button>
+        </div>
+      </div>
+      <div class="mt-2 text-xs ${isRead ? 'text-emerald-400' : 'text-gray-400'}">${isRead ? 'Read' : 'Unread'} • ${article.source}</div>
+    </div>
+  `;
+
+  // open modal on click or Enter/Space
+  html.addEventListener("click", (e) => {
+    if (e.target.closest(".bookmark-btn") || e.target.closest(".share-btn")) return;
+    openArticle(article.id);
+  });
+  html.addEventListener("keydown", (e) => {
+    if (e.key === "Enter" || e.key === " ") {
+      if (document.activeElement === html) openArticle(article.id);
+    }
+  });
+
+  // bookmark button handler
+  html.querySelectorAll(".bookmark-btn").forEach(b => {
+    b.addEventListener("click", (ev) => {
+      ev.stopPropagation();
+      toggleBookmark(article.id, b);
+    });
+  });
+
+  // share button handler (WhatsApp)
+  html.querySelectorAll(".share-btn").forEach(s => {
+    s.addEventListener("click", (ev) => {
+      ev.stopPropagation();
+      shareWhatsApp(article);
+    });
+  });
+
+  return html;
+}
+
+/* render news grid with active filters and pagination */
+function renderNews(resetPage = false){
+  if (resetPage) currentPage = 1;
+  // apply search & category filters & sort
+  let items = NEWS.slice();
+
+  if (activeCategory) {
+    items = items.filter(a => (a.tags || []).includes(activeCategory));
+  }
+  if (searchQuery) {
+    const q = searchQuery.toLowerCase();
+    items = items.filter(a => (a.title + " " + a.excerpt + " " + (a.tags||[]).join(" ")).toLowerCase().includes(q));
+  }
+
+  if (sortMode === "date_desc") items.sort((a,b) => new Date(b.date) - new Date(a.date));
+  else if (sortMode === "date_asc") items.sort((a,b) => new Date(a.date) - new Date(b.date));
+  else if (sortMode === "popular") items.sort((a,b) => popularityScore(b) - popularityScore(a));
+
+  // pagination
+  pageCount = Math.ceil(items.length / PAGE_SIZE) || 1;
+  const start = 0;
+  const end = Math.min(items.length, currentPage * PAGE_SIZE);
+  const slice = items.slice(0, end);
+
+  newsGrid.innerHTML = "";
+  slice.forEach(a => newsGrid.appendChild(buildCard(a)));
+
+  // update meta
+  resultsInfo.textContent = `Showing ${slice.length} of ${items.length} article${items.length===1 ? '' : 's'}${activeCategory ? ' • ' + activeCategory : ''}`;
+  pageInfo.textContent = `Page ${currentPage} / ${pageCount}`;
+
+  // show/hide load more
+  loadMoreBtn.style.display = (end < items.length) ? "" : "none";
+
+  // update top stories & tag list
+  renderTopStories(items);
+  renderTags();
+}
+
+/* Load more handler */
+loadMoreBtn.addEventListener("click", ()=>{
+  currentPage++;
+  renderNews();
+});
+
+/* categories (tags) filters UI */
+function renderTags(){
+  tagList.innerHTML = "";
+  const tags = allTags();
+  tags.forEach(t => {
+    const btn = document.createElement("button");
+    btn.className = `px-3 py-1 rounded ${t===activeCategory ? 'bg-pink-500' : 'bg-white/6'} text-sm`;
+    btn.textContent = t;
+    btn.addEventListener("click", ()=> {
+      activeCategory = (activeCategory === t) ? null : t;
+      renderNews(true);
+      highlightCategoryFilters();
+    });
+    tagList.appendChild(btn);
+  });
+
+  // small category chips at top (in controls)
+  categoryFilters.innerHTML = "";
+  ['All', ...tags].forEach(t=>{
+    const el = document.createElement("button");
+    el.className = `px-3 py-1 rounded ${t===activeCategory ? 'bg-pink-500' : 'bg-white/6'} text-sm`;
+    el.textContent = t;
+    el.addEventListener("click", ()=> {
+      activeCategory = (t === 'All') ? null : t;
+      renderNews(true);
+      highlightCategoryFilters();
+    });
+    categoryFilters.appendChild(el);
+  });
+}
+
+/* highlight filters */
+function highlightCategoryFilters(){
+  // handled via class toggles from renderTags; this ensures consistent state
+  const allBtns = categoryFilters.querySelectorAll("button");
+  allBtns.forEach(b => {
+    const txt = b.textContent;
+    if ((txt === 'All' && !activeCategory) || (txt === activeCategory)) {
+      b.classList.add("bg-pink-500");
+      b.classList.remove("bg-white/6");
+    } else {
+      b.classList.remove("bg-pink-500");
+      b.classList.add("bg-white/6");
+    }
+  });
+}
+
+/* top stories list */
+function renderTopStories(currentItems){
+  topStories.innerHTML = "";
+  // pick top 4 by popularityScore
+  const top = (currentItems || NEWS).slice().sort((a,b)=>popularityScore(b)-popularityScore(a)).slice(0,4);
+  top.forEach(t => {
+    const el = document.createElement("div");
+    el.className = "flex items-start gap-3";
+    el.innerHTML = `<div class="h-12 w-12 bg-black/20 rounded overflow-hidden"><img src="${t.image}" alt="${t.title}" class="h-full w-full object-cover" loading="lazy" onerror="this.style.display='none'"/></div><div><div class="font-semibold text-sm">${t.title}</div><div class="text-xs text-gray-300">${formatDate(t.date)}</div></div>`;
+    el.addEventListener("click", ()=> openArticle(t.id));
+    topStories.appendChild(el);
+  });
+}
+
+/* Search / sort handlers */
+document.getElementById("newsSearch").addEventListener("input", (e)=>{
+  searchQuery = e.target.value.trim();
+  currentPage = 1;
+  renderNews(true);
+});
+
+document.getElementById("newsSort").addEventListener("change", (e)=>{
+  sortMode = e.target.value;
+  renderNews(true);
+});
+
+document.getElementById("clearFilters").addEventListener("click", ()=>{
+  activeCategory = null;
+  searchQuery = "";
+  document.getElementById("newsSearch").value = "";
+  renderNews(true);
+});
+
+/* Bookmark toggle */
+function toggleBookmark(id, btnEl){
+  if (bookmarks.includes(id)) {
+    bookmarks = bookmarks.filter(x=>x!==id);
+    toast("Removed from saved");
+  } else {
+    bookmarks.push(id);
+    toast("Saved article");
+  }
+  localStorage.setItem(BOOKMARK_KEY, JSON.stringify(bookmarks));
+  if (btnEl) {
+    btnEl.setAttribute("aria-pressed", bookmarks.includes(id));
+    btnEl.classList.toggle("bg-pink-500", bookmarks.includes(id));
+    btnEl.classList.toggle("bg-white/6", !bookmarks.includes(id));
+    btnEl.textContent = bookmarks.includes(id) ? 'Saved' : 'Save';
+  }
+}
+
+/* share via WhatsApp */
+function shareWhatsApp(article){
+  const msg = `${article.title}%0A%0A${article.excerpt}%0A%0ALearn more: ${location.href}#${article.id}`;
+  window.open(`https://wa.me/?text=${msg}`, "_blank");
+}
+
+/* Article modal logic */
+const articleModal = document.getElementById("articleModal");
+const modalBackdrop = document.getElementById("modalBackdrop");
+const modalTitle = document.getElementById("modalTitle");
+const modalMeta = document.getElementById("modalMeta");
+const modalContent = document.getElementById("modalContent");
+const modalTags = document.getElementById("modalTags");
+const modalCloseBtn = document.getElementById("modalCloseBtn");
+const bookmarkBtn = document.getElementById("bookmarkBtn");
+const shareWhatsBtn = document.getElementById("shareWhatsBtn");
+const markReadBtn = document.getElementById("markReadBtn");
+const openOriginal = document.getElementById("openOriginal");
+
+function openArticle(id){
+  const article = NEWS.find(n => n.id === id);
+  if (!article) return;
+  modalTitle.textContent = article.title;
+  modalMeta.textContent = `${formatDate(article.date)} • ${article.source}`;
+  modalContent.innerHTML = article.body;
+  modalTags.innerHTML = (article.tags || []).map(t => `<span class="px-2 py-1 bg-white/6 rounded text-sm mr-1">${t}</span>`).join("");
+  openOriginal.href = article.url || "#";
+  // bookmark button state
+  bookmarkBtn.textContent = bookmarks.includes(id) ? 'Saved' : 'Bookmark';
+  bookmarkBtn.dataset.id = id;
+  shareWhatsBtn.dataset.id = id;
+  markReadBtn.dataset.id = id;
+  articleModal.classList.remove("hidden");
+  document.body.classList.add("modal-open");
+  // mark analytics (console demo)
+  console.log("openArticle", id);
+}
+
+modalCloseBtn.addEventListener("click", closeArticle);
+modalBackdrop.addEventListener("click", closeArticle);
+
+function closeArticle(){
+  articleModal.classList.add("hidden");
+  document.body.classList.remove("modal-open");
+  modalContent.innerHTML = "";
+  // update UI to reflect read/bookmarks
+  renderNews(false);
+}
+
+bookmarkBtn.addEventListener("click", (e)=>{
+  const id = e.target.dataset.id;
+  toggleBookmark(id, e.target);
+  // refresh list states
+  renderNews(false);
+});
+
+shareWhatsBtn.addEventListener("click", (e)=>{
+  const id = e.target.dataset.id;
+  const article = NEWS.find(n=>n.id===id);
+  if (article) shareWhatsApp(article);
+});
+
+markReadBtn.addEventListener("click", (e)=>{
+  const id = e.target.dataset.id;
+  if (!readItems.includes(id)) {
+    readItems.push(id);
+    localStorage.setItem(READ_KEY, JSON.stringify(readItems));
+    toast("Marked as read");
+  }
+  renderNews(false);
+});
+
+/* keyboard: Escape closes modal */
+document.addEventListener("keydown", (e)=>{
+  if (e.key === "Escape") {
+    if (!articleModal.classList.contains("hidden")) closeArticle();
+  }
+});
+
+/* toast */
+function toast(msg){
+  const el = document.createElement("div");
+  el.className = "bg-black/80 text-white px-4 py-2 rounded mb-2";
+  el.textContent = msg;
+  document.getElementById("toast").appendChild(el);
+  setTimeout(()=> el.classList.add("opacity-0"), 1400);
+  setTimeout(()=> el.remove(), 1900);
+}
+
+/* download RSS (generate XML string and download as file) */
+function buildRssXml(){
+  const siteTitle = "Ba Yi's PC Games - News";
+  const siteLink = location.origin + location.pathname;
+  const itemsXml = NEWS.map(n => `
+    <item>
+      <title><![CDATA[${n.title}]]></title>
+      <link>${(n.url && n.url !== "#") ? n.url : siteLink + "#" + n.id}</link>
+      <pubDate>${new Date(n.date).toUTCString()}</pubDate>
+      <description><![CDATA[${n.excerpt}]]></description>
+      <guid>${siteLink}#${n.id}</guid>
+    </item>`).join("");
+  const xml = `<?xml version="1.0" encoding="UTF-8" ?>
+  <rss version="2.0">
+    <channel>
+      <title>${siteTitle}</title>
+      <link>${siteLink}</link>
+      <description>News feed from Ba Yi’s PC Games</description>
+      ${itemsXml}
+    </channel>
+  </rss>`;
+  return xml;
+}
+document.getElementById("downloadRss").addEventListener("click", ()=>{
+  const xml = buildRssXml();
+  const blob = new Blob([xml], { type: "application/rss+xml" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "ba_yi_news.rss";
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  URL.revokeObjectURL(url);
+});
+
+/* subscribe button duplicate */
+document.getElementById("subscribeBtn").addEventListener("click", ()=> document.getElementById("downloadRss").click());
+
+/* load initial state */
+function init(){
+  renderTags();
+  renderNews(true);
+}
+
+/* Share handler for card share (delegation for share buttons) already attached per card */
+
+init();
+
+/* Basic accessibility: focus trap not implemented but modal receives focus naturally
+   For production, add focus trap and restore focus to opener.
+*/
+
+</script>
+</body>
+</html>

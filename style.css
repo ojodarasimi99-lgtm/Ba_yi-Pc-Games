@@ -1,0 +1,21 @@
+header img {
+  position: relative;
+  left: 359px;
+  border-radius: 50px 50px 50px 50px; 
+  height: 80px;  /* move logo right */
+}
+
+header nav {
+  position: relative;
+  right: 90px;
+  justify-content: center;
+ nav { margin-right: 250px; }
+ right: 200px;
+}
+header {
+   align-items: center;
+  padding: 0 5%;
+}
+nav a {
+  text-decoration: none;
+}

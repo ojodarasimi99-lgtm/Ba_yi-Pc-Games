@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Top 5 • Ba Yi’s PC Games</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Josefin+Sans:ital,wght@0,100..700;1,100..700&family=Lexend:wght@100..900&display=swap" rel="stylesheet">
+
+  <!-- Tailwind -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <style>
+    .gpu { image-rendering: auto; backface-visibility: hidden; transform: translateZ(0); }
+    body.modal-open { overflow: hidden; } /* lock background scroll when modal open */
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(6px) scale(.995); } to { opacity: 1; transform: translateY(0) scale(1); } }
+    .animate-fadeIn { animation: fadeIn .22s ease-out; }
+    .sr-only { position: absolute !important; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+  </style>
+</head>
+<body class="bg-[#1b1544] text-white font-[Lexend]">
+
+  <!-- Header -->
+  <header class="fixed top-0 left-0 w-full bg-[#1b1544]/80 backdrop-blur-md z-50 flex justify-between items-center px-6 md:px-10 py-4 ">
+        <div class="flex items-center gap-3">
+      <img src="Ba_Yi’s Pc Games.png" alt="Ba Yi's logo" class="h-10 w-10 rounded-full object-cover border-2 border-pink-400">
+      <div>
+        <div class="font-extrabold text-lg">Ba Yi’s PC Games</div>
+        <div class="text-xs text-gray-300">Me & Me Only</div>
+      </div>
+    </div>
+<div class="flex-1 flex justify-center">
+  <nav class="flex items-center space-x-8 text-sm bg-[#1e1e2f]/80 backdrop-blur-md border border-[#2f2f45] rounded-full px-5 py-3 shadow-lg text-gray-200">
+    
+    <a href="top5.html" class="relative group px-3 py-1 font-medium transition-all duration-300">
+      Top 5
+      <span class="absolute left-1 bottom-1 w-0 h-0.5 bg-sky-400 transition-all duration-300 group-hover:w-[calc(100%-0.5rem)]"></span>
+    </a>
+
+    <a href="genre.html" class="relative group px-3 py-1 font-medium transition-all duration-300">
+      Genre
+      <span class="absolute left-1 bottom-1 w-0 h-0.5 bg-purple-400 transition-all duration-300 group-hover:w-[calc(100%-0.5rem)]"></span>
+    </a>
+
+    <a href="Recommended.html" class="relative group px-3 py-1 font-medium transition-all duration-300">
+      Recommended
+      <span class="absolute left-1 bottom-1 w-0 h-0.5 bg-emerald-400 transition-all duration-300 group-hover:w-[calc(100%-0.5rem)]"></span>
+    </a>
+
+  </nav>
+</div>
+
+  </header>
+
+  <div class="h-[72px]"></div> <!-- spacer -->
+
+  <!-- HERO -->
+  <section class="text-center py-16 px-6">
+    <h1 class="text-4xl md:text-5xl font-bold leading-tight">
+      Discover <span class="text-pink-400">Latest games</span><br> & My game reviews
+    </h1>
+    <p class="text-gray-300 mt-3 max-w-2xl mx-auto">Click or tab to a card and press Enter to open details with gameplay, specs and purchase options.</p>
+  </section>
+
+  <!-- CARDS -->
+  <main class="px-6 md:px-10 pb-10">
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+
+      <!-- NOTE: cards are <button> with data-game, keyboard focusable, animation classes -->
+      <button data-game="gta5"
+        class="relative rounded-2xl overflow-hidden min-h-[380px] md:min-h-[420px] group focus:outline-none focus-visible:ring-2 focus-visible:ring-pink-400 transition-transform transform hover:scale-105 active:scale-95 cursor-pointer"
+        aria-label="Open GTA V details" tabindex="0">
+        <div class="absolute inset-0 bg-cover bg-center gpu" style="background-image:url('c_1.jpg')" role="img" aria-hidden="true"></div>
+        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
+        <div class="absolute bottom-0 w-full p-5 text-center">
+          <h3 class="text-xl md:text-2xl font-bold">GTA V</h3>
+          <p class="text-gray-300 text-sm mt-1">Open World</p>
+        </div>
+      </button>
+
+      <button data-game="fifa23"
+        class="relative rounded-2xl overflow-hidden min-h-[320px] group focus:outline-none focus-visible:ring-2 focus-visible:ring-pink-400 transition-transform transform hover:scale-105 active:scale-95 cursor-pointer"
+        aria-label="Open FIFA 23 details" tabindex="0">
+        <div class="absolute inset-0 bg-cover bg-center gpu" style="background-image:url('c_2.jpg')" role="img" aria-hidden="true"></div>
+        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
+        <div class="absolute bottom-0 w-full p-5 text-center">
+          <h3 class="text-xl font-bold">FIFA 23</h3>
+          <p class="text-gray-300 text-sm mt-1">Sports</p>
+        </div>
+      </button>
+
+      <button data-game="arkham"
+        class="relative rounded-2xl overflow-hidden min-h-[320px] group focus:outline-none focus-visible:ring-2 focus-visible:ring-pink-400 transition-transform transform hover:scale-105 active:scale-95 cursor-pointer"
+        aria-label="Open Batman Arkham details" tabindex="0">
+        <div class="absolute inset-0 bg-cover bg-center gpu" style="background-image:url('c_3.jpg')" role="img" aria-hidden="true"></div>
+        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
+        <div class="absolute bottom-0 w-full p-5 text-center">
+          <h3 class="text-xl font-bold">Bat-Man Arkham</h3>
+          <p class="text-gray-300 text-sm mt-1">Adventures</p>
+        </div>
+      </button>
+
+      <button data-game="spidey"
+        class="relative rounded-2xl overflow-hidden min-h-[320px] group focus:outline-none focus-visible:ring-2 focus-visible:ring-pink-400 transition-transform transform hover:scale-105 active:scale-95 cursor-pointer"
+        aria-label="Open Spider-Man details" tabindex="0">
+        <div class="absolute inset-0 bg-cover bg-center gpu" style="background-image:url('c_4.jpg')" role="img" aria-hidden="true"></div>
+        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
+        <div class="absolute bottom-0 w-full p-5 text-center">
+          <h3 class="text-xl font-bold">Spider-Man Remastered</h3>
+          <p class="text-gray-300 text-sm mt-1">Adventures</p>
+        </div>
+      </button>
+
+    </div>
+  </main>
+
+  <!-- TRANSPARENT "TRADING-APP" STYLE LIST -->
+  <section class="px-6 md:px-10 pb-16">
+    <h2 class="text-2xl md:text-3xl font-bold mb-4">More games — market view</h2>
+    <p class="text-gray-300 mb-6 max-w-2xl">Quick glance list with price and 24h change. Click Buy to message me on WhatsApp.</p>
+
+    <div id="marketGrid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+      <!-- JS will populate entries here -->
+    </div>
+
+    <div class="mt-6 text-sm text-gray-400">Tip: click a trading card to open WhatsApp buy link or add to cart from modal.</div>
+  </section>
+
+  <!-- Info / CTA & FABs -->
+  <section class="bg-[#2a235e] py-14 px-6 md:px-10 text-center">
+    <h2 class="text-3xl md:text-4xl font-bold mb-6">Ba_Yi’s PC Games helps you choose the <span class="text-pink-400">best games</span> for your PC specs</h2>
+
+    <div class="flex items-center justify-center gap-6">
+      <a id="chatFab" href="https://wa.me/2348130489824" target="_blank" aria-label="Chat on WhatsApp" class="fixed right-6 bottom-6 z-50 inline-flex items-center gap-3 px-5 py-3 bg-pink-500 text-white rounded-full shadow-lg hover:bg-pink-600 transition transform hover:scale-105 animate-bounce">
+        💬 Chat Me
+      </a>
+
+      <button id="cartFab" aria-label="Open cart" class="fixed left-6 bottom-6 z-50 inline-flex items-center gap-3 px-4 py-3 bg-white/8 text-white rounded-full hover:bg-white/12 transition">
+        🛒 <span id="cartCount" class="ml-2 font-bold">0</span>
+      </button>
+    </div>
+
+    <!-- Stats -->
+    <div class="grid grid-cols-2 sm:grid-cols-4 gap-8 max-w-4xl mx-auto text-center mt-8">
+      <div><p class="text-3xl font-extrabold text-pink-400">+5000</p><p class="text-gray-300">Games Reviewed</p></div>
+      <div><p class="text-3xl font-extrabold text-pink-400">+20</p><p class="text-gray-300">Genres Covered</p></div>
+      <div><p class="text-3xl font-extrabold text-pink-400">+30,000</p><p class="text-gray-300">Hours Played</p></div>
+      <div><p class="text-3xl font-extrabold text-pink-400">15%</p><p class="text-gray-300">Average ROI</p></div>
+    </div>
+  </section>
+
+  <!-- Game Modal -->
+  <div id="gameModal" class="fixed inset-0 z-60 hidden" aria-hidden="true">
+    <div id="modalBackdrop" class="absolute inset-0 bg-black/75"></div>
+    <div class="relative mx-auto max-w-4xl w-[92%] md:w-[80%] lg:w-[70%] mt-[6vh] bg-[#151039] rounded-2xl border border-pink-400/20 animate-fadeIn">
+      <div class="flex items-start justify-between p-4 md:p-6 border-b border-white/6">
+        <div>
+          <h3 id="modalTitle" class="text-xl md:text-2xl font-bold"></h3>
+          <p id="modalGenre" class="text-pink-300 text-sm mt-1"></p>
+        </div>
+        <div class="flex items-center gap-3">
+          <button id="singleBuyBtn" class="px-4 py-2 rounded-md bg-pink-500 text-white text-sm md:text-base hover:bg-pink-600">Buy Now</button>
+          <button id="modalClose" aria-label="Close modal" class="text-white/80 hover:text-white text-2xl">&times;</button>
+        </div>
+      </div>
+
+      <div class="max-h-[75vh] overflow-y-auto p-4 md:p-6 space-y-6">
+        <div class="aspect-video w-full rounded-xl overflow-hidden bg-black">
+          <iframe id="modalVideo" class="w-full h-full" src="" title="Gameplay video" allowfullscreen loading="lazy"></iframe>
+        </div>
+
+        <p id="modalDesc" class="text-gray-200 leading-relaxed"></p>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div class="bg-white/5 rounded-xl p-4">
+            <h4 class="font-semibold text-white">Minimum Specs</h4>
+            <ul id="specsMin" class="mt-2 list-disc list-inside text-gray-300 text-sm space-y-1"></ul>
+          </div>
+          <div class="bg-white/5 rounded-xl p-4">
+            <h4 class="font-semibold text-white">Recommended Specs</h4>
+            <ul id="specsRec" class="mt-2 list-disc list-inside text-gray-300 text-sm space-y-1"></ul>
+          </div>
+        </div>
+
+        <div class="bg-gradient-to-r from-pink-500/10 to-pink-400/10 rounded-xl p-4 md:p-5 flex items-center justify-between gap-4 flex-wrap">
+          <div>
+            <p class="text-sm text-gray-300">Download price (licensing service)</p>
+            <p id="priceEl" class="text-2xl md:text-3xl font-extrabold text-pink-400 mt-1">₦—</p>
+          </div>
+          <div class="flex gap-3">
+            <button id="addToCartBtn" class="px-5 py-3 rounded-xl bg-white/10 hover:bg-white/20 text-white font-semibold">Add to Cart</button>
+            <button id="buyNowBtn" class="px-5 py-3 rounded-xl bg-pink-500 hover:bg-pink-600 text-white font-semibold">Buy on WhatsApp</button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Cart Modal -->
+  <div id="cartModal" class="fixed inset-0 z-60 hidden" aria-hidden="true">
+    <div id="cartBackdrop" class="absolute inset-0 bg-black/75"></div>
+    <div class="relative mx-auto max-w-4xl w-[92%] md:w-[80%] lg:w-[70%] mt-[8vh] bg-[#151039] rounded-2xl border border-pink-400/20 animate-fadeIn">
+      <div class="flex items-center justify-between p-4 md:p-6 border-b border-white/6">
+        <h3 class="text-xl md:text-2xl font-bold">Your Cart</h3>
+        <button id="cartClose" aria-label="Close cart" class="text-white/80 hover:text-white text-2xl">&times;</button>
+      </div>
+      <div class="max-h-[70vh] overflow-y-auto p-4 md:p-6">
+        <div id="cartItems" class="space-y-3"></div>
+        <div id="cartEmpty" class="text-gray-300 text-center py-8 hidden">Your cart is empty.</div>
+      </div>
+      <div class="p-4 md:p-6 border-t border-white/6 flex flex-col md:flex-row items-center justify-between gap-4">
+        <div class="text-lg">Total: <span id="cartTotal" class="font-extrabold text-pink-400">₦0</span></div>
+        <div class="flex gap-3">
+          <button id="clearCartBtn" class="px-4 py-2 rounded-xl bg-white/10 hover:bg-white/20">Clear</button>
+          <a id="checkoutBtn" href="#" target="_blank" class="px-5 py-3 rounded-xl bg-pink-500 hover:bg-pink-600 text-white font-semibold">Checkout on WhatsApp</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<script>
+/* ------------------------
+  Minimal game dataset (same as before, used by modal)
+  ------------------------ */
+const games = {
+  gta5: { name:"GTA V", genre:"Open World", video:"https://www.youtube.com/embed/4E8bbo3bOtU?rel=0", desc:"Switch between three protagonists in Los Santos.", min:["Intel i7-4770 / Ryzen 5 1400","12 GB RAM","GTX 1050 Ti / RX 570","90 GB"], rec:["i7-6700K / Ryzen 5 2600","16 GB RAM","GTX 1660 / RX 590","90 GB SSD"] },
+  fifa23: { name:"FIFA 23", genre:"Sports", video:"https://www.youtube.com/embed/o3V-GvvzjE4?rel=0", desc:"HyperMotion2 and realistic football gameplay.", min:["i5-6600K / Ryzen 5 1600","8 GB RAM","GTX 1050 Ti / RX 570","100 GB"], rec:["i7-6700 / Ryzen 7 2700X","12 GB RAM","GTX 1660 / RX 5600 XT","100 GB"] },
+  arkham: { name:"Batman: Arkham Knight", genre:"Action / Adventure", video:"https://www.youtube.com/embed/wsf78BS9VE0?rel=0", desc:"Play as Batman in the finale from Rocksteady.", min:["i5-750 / Phenom II X4 965","6 GB RAM","GTX 660 / HD 7870","45 GB"], rec:["i7-3770 / FX-8350","8 GB RAM","GTX 760 / R9 280","55 GB"] },
+  spidey: { name:"Spider-Man Remastered", genre:"Action / Adventure", video:"https://www.youtube.com/embed/Yw7oS6v1ZNY?rel=0", desc:"Swing through NYC with ray-tracing and PC features.", min:["i3-4160 / AMD eqv","8 GB RAM","GTX 950 / RX 470","75 GB"], rec:["i5-4670 / Ryzen 5 1600","16 GB RAM","GTX 1060 6GB / RX 580 8GB","75 GB SSD"] }
+};
+
+/* image map for top cards -> used in cart */
+const GAME_IMAGES = {
+  gta5: "c_1.jpg",
+  fifa23: "c_2.jpg",
+  arkham: "c_3.jpg",
+  spidey: "c_4.jpg"
+};
+
+/* ------------------------
+  Price utils (stable per session)
+  ------------------------ */
+const priceSteps = [2000,2500,3000,3500,4000,4500,5000];
+const sessionPricesKey = "by_prices_v1";
+let sessionPrices = JSON.parse(sessionStorage.getItem(sessionPricesKey) || "{}");
+const getPrice = (key) => {
+  if (!sessionPrices[key]) {
+    sessionPrices[key] = priceSteps[Math.floor(Math.random()*priceSteps.length)];
+    sessionStorage.setItem(sessionPricesKey, JSON.stringify(sessionPrices));
+  }
+  return sessionPrices[key];
+};
+const fmtNGN = v => new Intl.NumberFormat("en-NG",{style:"currency",currency:"NGN",maximumFractionDigits:0}).format(v);
+
+/* ------------------------
+  Modal open/close + keyboard activation
+  ------------------------ */
+const modal = document.getElementById("gameModal");
+const modalBackdrop = document.getElementById("modalBackdrop");
+const modalClose = document.getElementById("modalClose");
+const modalTitle = document.getElementById("modalTitle");
+const modalGenre = document.getElementById("modalGenre");
+const modalVideo = document.getElementById("modalVideo");
+const modalDesc = document.getElementById("modalDesc");
+const specsMin = document.getElementById("specsMin");
+const specsRec = document.getElementById("specsRec");
+const priceEl = document.getElementById("priceEl");
+
+function openModal(key) {
+  const g = games[key];
+  if (!g) return;
+  modal.dataset.current = key;
+  modalTitle.textContent = g.name;
+  modalGenre.textContent = g.genre;
+  modalVideo.src = g.video;
+  modalDesc.textContent = g.desc;
+  specsMin.innerHTML = g.min.map(x => `<li>${x}</li>`).join("");
+  specsRec.innerHTML = g.rec.map(x => `<li>${x}</li>`).join("");
+  priceEl.textContent = fmtNGN(getPrice(key));
+  modal.classList.remove("hidden"); document.body.classList.add("modal-open");
+  modalClose.focus();
+}
+function closeModal() {
+  modalVideo.src = ""; modal.classList.add("hidden"); document.body.classList.remove("modal-open"); delete modal.dataset.current;
+}
+
+/* Click delegation for cards */
+document.addEventListener("click", (e) => {
+  const btn = e.target.closest("[data-game]");
+  if (!btn) return;
+  const key = btn.getAttribute("data-game");
+  openModal(key);
+});
+
+/* Keyboard: Enter/Space activate focused card + Escape closes any modal */
+document.addEventListener("keydown", (e) => {
+  const el = document.activeElement;
+  if (el && el.hasAttribute && el.hasAttribute("data-game")) {
+    if (e.key === "Enter" || e.key === " ") {
+      e.preventDefault();
+      el.click();
+    }
+  }
+  if (e.key === "Escape") {
+    if (!modal.classList.contains("hidden")) closeModal();
+    if (!cartModal.classList.contains("hidden")) closeCart();
+  }
+});
+
+/* Close handlers */
+modalBackdrop.addEventListener("click", closeModal);
+modalClose.addEventListener("click", closeModal);
+
+/* ------------------------
+  Toast
+  ------------------------ */
+function toast(msg) {
+  const t = document.createElement("div");
+  t.textContent = msg;
+  t.className = "fixed right-6 top-6 z-[999] bg-black/80 text-white px-4 py-2 rounded-lg transition-opacity";
+  document.body.appendChild(t);
+  setTimeout(()=> t.classList.add("opacity-0"), 1500);
+  setTimeout(()=> t.remove(), 2000);
+}
+
+/* ------------------------
+  CART (persistent)
+  ------------------------ */
+const WA_NUMBER = "2348130489824";
+const CART_KEY = "by_cart_v1";
+let cart = JSON.parse(localStorage.getItem(CART_KEY) || "[]");
+
+const cartFab = document.getElementById("cartFab");
+const cartCountEl = document.getElementById("cartCount");
+const cartModal = document.getElementById("cartModal");
+const cartBackdrop = document.getElementById("cartBackdrop");
+const cartClose = document.getElementById("cartClose");
+const cartItemsEl = document.getElementById("cartItems");
+const cartEmptyEl = document.getElementById("cartEmpty");
+const cartTotalEl = document.getElementById("cartTotal");
+const checkoutBtn = document.getElementById("checkoutBtn");
+const clearCartBtn = document.getElementById("clearCartBtn");
+
+function saveCart(){ localStorage.setItem(CART_KEY, JSON.stringify(cart)); }
+function cartCount(){ return cart.reduce((s,i)=>s+i.qty,0); }
+function updateCartCount(){ cartCountEl.textContent = cartCount(); }
+
+function addToCart({key,name,price,img}) {
+  const found = cart.find(i => i.key === key);
+  if (found) { found.qty += 1; }
+  else { cart.push({ key, name, price, qty: 1, img: img || "" }); }
+  saveCart();
+  updateCartCount();
+  renderCart();
+  toast(`${name} added to cart`);
+}
+
+function removeFromCart(key){
+  cart = cart.filter(i => i.key !== key);
+  saveCart(); updateCartCount(); renderCart();
+}
+
+function changeQty(key, delta){
+  const item = cart.find(i => i.key === key);
+  if (!item) return;
+  item.qty += delta;
+  if (item.qty <= 0) removeFromCart(key);
+  saveCart(); updateCartCount(); renderCart();
+}
+
+function renderCart(){
+  if (!cartItemsEl) return;
+  cartItemsEl.innerHTML = "";
+  if (cart.length === 0){
+    cartEmptyEl.classList.remove("hidden");
+  } else {
+    cartEmptyEl.classList.add("hidden");
+    cart.forEach(item => {
+      const row = document.createElement("div");
+      row.className = "bg-white/5 rounded-xl p-3 flex items-center gap-3";
+      row.innerHTML = `
+        <div class="h-12 w-12 rounded-md overflow-hidden bg-black/30 flex-shrink-0">
+          <img src="${item.img}" alt="" class="h-full w-full object-cover" onerror="this.style.display='none'"/>
+        </div>
+        <div class="flex-1 min-w-0">
+          <div class="font-semibold truncate">${item.name}</div>
+          <div class="text-sm text-gray-300">${fmtNGN(item.price)} each</div>
+        </div>
+        <div class="flex items-center gap-2">
+          <button class="qtyDec px-3 py-1 bg-white/10 hover:bg-white/20 rounded-md" data-key="${item.key}">-</button>
+          <span class="min-w-[2ch] text-center">${item.qty}</span>
+          <button class="qtyInc px-3 py-1 bg-white/10 hover:bg-white/20 rounded-md" data-key="${item.key}">+</button>
+        </div>
+        <div class="w-24 text-right font-semibold">${fmtNGN(item.price * item.qty)}</div>
+        <button class="removeItem ml-2 text-red-400 hover:text-red-300 text-sm" data-key="${item.key}">Remove</button>
+      `;
+      cartItemsEl.appendChild(row);
+    });
+  }
+  const total = cart.reduce((s,i)=> s + (i.price * i.qty), 0);
+  cartTotalEl.textContent = fmtNGN(total);
+
+  // build WhatsApp message
+  const lines = cart.map(i => `${i.name} x${i.qty} — ${fmtNGN(i.price * i.qty)}`).join('%0A');
+  const msg = cart.length
+    ? `Hello Ba Yi, here's my order:%0A%0A${lines}%0A%0ATotal: ${fmtNGN(total)}`
+    : `Hello Ba Yi, I'd like to order.`;
+  checkoutBtn.href = `https://wa.me/${WA_NUMBER}?text=${msg}`;
+}
+
+function openCart(){ renderCart(); cartModal.classList.remove("hidden"); document.body.classList.add("modal-open"); }
+function closeCart(){ cartModal.classList.add("hidden"); document.body.classList.remove("modal-open"); }
+
+cartFab.addEventListener("click", openCart);
+cartBackdrop.addEventListener("click", closeCart);
+cartClose.addEventListener("click", closeCart);
+clearCartBtn.addEventListener("click", ()=>{ cart = []; saveCart(); updateCartCount(); renderCart(); });
+
+cartItemsEl.addEventListener("click",(e)=>{
+  const dec = e.target.closest(".qtyDec");
+  const inc = e.target.closest(".qtyInc");
+  const rem = e.target.closest(".removeItem");
+  if (dec) changeQty(dec.getAttribute("data-key"), -1);
+  else if (inc) changeQty(inc.getAttribute("data-key"), +1);
+  else if (rem) removeFromCart(rem.getAttribute("data-key"));
+});
+
+/* ------------------------
+  MARKET GRID (many games) - trading-app style cards
+  ------------------------ */
+const MARKET = [
+  { key:"witcher3", name:"The Witcher 3", img:"witcher.jpg" },
+  { key:"rdr2", name:"Red Dead Redemption 2", img:"rdr2.jpg" },
+  { key:"doom", name:"Doom Eternal", img:"doom.webp" },
+  { key:"re4", name:"Resident Evil 4", img:"re4.jpg" },
+  { key:"elden", name:"Elden Ring", img:"elden.jpg" },
+  { key:"valheim", name:"Valheim", img:"valheim.jpg" },
+  { key:"halo", name:"Halo Infinite", img:"halo.jpg" },
+  { key:"cyber", name:"Cyberpunk 2077", img:"c_5.png" }
+];
+
+const marketGrid = document.getElementById("marketGrid");
+
+// helper randoms for price and change%
+function randPrice(min=800,max=5000){ return Math.round((Math.random()*(max-min)+min)/100)*100; }
+function randChange(){ return (Math.random()*24-12).toFixed(2); } // -12%..+12%
+
+function buildMarket() {
+  marketGrid.innerHTML = "";
+  MARKET.forEach(item=>{
+    const price = randPrice();
+    const change = parseFloat(randChange());
+    const card = document.createElement("div");
+    card.className = "bg-white/5 backdrop-blur-sm border border-white/6 rounded-xl p-3 flex items-center gap-3 hover:scale-[1.02] transition transform";
+    card.innerHTML = `
+      <img src="${item.img}" alt="${item.name}" class="h-12 w-12 rounded-md object-cover"/>
+      <div class="flex-1 min-w-0">
+        <div class="flex items-center justify-between">
+          <div class="truncate">
+            <div class="font-semibold">${item.name}</div>
+            <div class="text-xs text-gray-300">PC • Action</div>
+          </div>
+          <div class="text-right">
+            <div class="font-semibold">${fmtNGN(price)}</div>
+            <div class="${change>=0? 'text-emerald-400':'text-red-400'} text-sm">${change>=0?'+':''}${change}%</div>
+          </div>
+        </div>
+        <div class="mt-2 flex gap-2">
+          <a href="https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(`Hello Ba Yi, I want to buy ${item.name} for ${fmtNGN(price)}`)}" target="_blank" class="px-3 py-1 text-xs rounded-md bg-pink-500 hover:bg-pink-600">Buy</a>
+          <button data-market-key="${item.key}" data-market-name="${item.name}" data-market-price="${price}" data-market-img="${item.img}" class="addMarketToCart px-3 py-1 text-xs rounded-md bg-white/10 hover:bg-white/20">Add</button>
+        </div>
+      </div>
+    `;
+    marketGrid.appendChild(card);
+  });
+}
+
+marketGrid.addEventListener("click",(e)=>{
+  const btn = e.target.closest(".addMarketToCart");
+  if (!btn) return;
+  const key = btn.getAttribute("data-market-key");
+  const name = btn.getAttribute("data-market-name");
+  const price = Number(btn.getAttribute("data-market-price")) || randPrice();
+  const img = btn.getAttribute("data-market-img") || "";
+  addToCart({ key, name, price, img });
+});
+
+buildMarket();
+
+/* ------------------------
+  Modal actions: Add to Cart + Buy Now
+  ------------------------ */
+const addToCartBtn = document.getElementById("addToCartBtn");
+const buyNowBtn = document.getElementById("buyNowBtn");
+const singleBuyBtn = document.getElementById("singleBuyBtn");
+
+function getImageForKey(key){ return GAME_IMAGES[key] || ""; }
+
+addToCartBtn.addEventListener("click", ()=>{
+  const key = modal.dataset.current;
+  if (!key) return;
+  const g = games[key];
+  addToCart({ key, name: g.name, price: getPrice(key), img: getImageForKey(key) });
+});
+
+function buyCurrentOnWhatsApp(){
+  const key = modal.dataset.current;
+  if (!key) return;
+  const g = games[key];
+  const msg = `Hello Ba Yi, I want to buy ${g.name} for ${fmtNGN(getPrice(key))}`;
+  window.open(`https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(msg)}`, "_blank");
+}
+buyNowBtn.addEventListener("click", buyCurrentOnWhatsApp);
+singleBuyBtn.addEventListener("click", buyCurrentOnWhatsApp);
+
+/* ------------------------
+  Init
+  ------------------------ */
+updateCartCount();
+renderCart();
+
+</script>
+
+</body>
+</html>
